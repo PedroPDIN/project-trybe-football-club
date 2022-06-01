@@ -3,7 +3,7 @@ import loginSchema from '../joi';
 
 const isValidLogin = async (req: Request, res: Response, next: NextFunction) => {
   const { error } = loginSchema.validate(req.body);
-  if (error) return res.status(400).json({ message: error.message });
+  if (error) return res.status(400).json({ message: 'All fields must be filled' });
   next();
 };
 
