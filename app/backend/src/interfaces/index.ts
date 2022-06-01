@@ -1,3 +1,7 @@
 import ILoginUser from './login.interfaces';
+import IUser from './user.interfaces';
 
-export default ILoginUser;
+export {
+  ILoginUser,
+  IUser,
+};
