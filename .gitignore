@@ -7,4 +7,4 @@ coverage
 front.eval
 back.eval
 .vscode
-*.en
+.env
