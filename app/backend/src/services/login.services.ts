@@ -32,9 +32,8 @@ export default class LoginService {
   };
 
   public loginValidate = async (token: string): Promise<string | null> => {
-    const { email } = verify(token, secret) as JwtPayload;
-    console.log(email);
-    const userFind = await User.findOne({ where: { email } }) as IUser;
+    const { user } = verify(token, secret) as JwtPayload;
+    const userFind = await User.findOne({ where: { email: user } }) as IUser;
     if (!userFind) return null;
 
     return userFind.role;
