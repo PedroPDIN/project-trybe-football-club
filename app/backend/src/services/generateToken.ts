@@ -11,4 +11,7 @@ const generateToken = (email: string): string => {
   return token;
 };
 
-export default generateToken;
+export {
+  secret,
+  generateToken,
+};

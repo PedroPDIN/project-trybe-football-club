@@ -1,3 +1,8 @@
 import LoginService from './login.services';
+import { generateToken, secret } from './generateToken';
 
-export default LoginService;
+export {
+  LoginService,
+  generateToken,
+  secret,
+};

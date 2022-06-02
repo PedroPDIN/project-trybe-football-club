@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcrypt';
+import { JwtPayload, verify } from 'jsonwebtoken';
 import User from '../database/models/User';
-import generateToken from './generateToken';
+import { generateToken, secret } from './generateToken';
 import { ILoginUser, IUser } from '../interfaces';
 
 type Login = {
@@ -28,5 +29,14 @@ export default class LoginService {
       },
       token,
     };
+  };
+
+  public loginValidate = async (token: string): Promise<string | null> => {
+    const { email } = verify(token, secret) as JwtPayload;
+    console.log(email);
+    const userFind = await User.findOne({ where: { email } }) as IUser;
+    if (!userFind) return null;
+
+    return userFind.role;
   };
 }
