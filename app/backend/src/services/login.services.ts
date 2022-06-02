@@ -2,7 +2,6 @@ import * as bcrypt from 'bcrypt';
 import User from '../database/models/User';
 import generateToken from './generateToken';
 import { ILoginUser, IUser } from '../interfaces';
-import { userInfo } from 'os';
 
 type Login = {
   email: string,
