@@ -3,6 +3,7 @@ import db from '.';
 import Match from './Match';
 
 export default class Team extends Model {
+  public id!: number;
   public teamName!: string;
 }
 
@@ -15,8 +16,8 @@ Team.init({
   timestamps: false,
 });
 
-Match.belongsTo(Team, { foreignKey: 'homeTeam', as: 'id' });
-Match.belongsTo(Team, { foreignKey: 'awayTeam', as: 'id' });
+Match.belongsTo(Team, { foreignKey: 'homeTeam', as: 'teamHome' });
+Match.belongsTo(Team, { foreignKey: 'awayTeam', as: 'teamAway' });
 
-Team.hasMany(Match, { foreignKey: 'homeTeam', as: 'home_team' });
-Team.hasMany(Match, { foreignKey: 'awayTeam', as: 'away_team' });
+Team.hasMany(Match, { foreignKey: 'id', as: 'home_team' });
+Team.hasMany(Match, { foreignKey: 'id', as: 'away_team' });

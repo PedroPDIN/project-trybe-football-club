@@ -1,3 +1,9 @@
 import routeLogin from './login.routes';
+import routeTeam from './team.routes';
 
-export default routeLogin;
+const routes = {
+  routeLogin,
+  routeTeam,
+};
+
+export default routes;

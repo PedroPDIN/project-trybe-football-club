@@ -1,5 +1,5 @@
 import * as express from 'express';
-import routeLogin from './routes';
+import routes from './routes';
 
 class App {
   public app: express.Express;
@@ -23,7 +23,8 @@ class App {
     this.app.use(accessControl);
     // ...
     this.app.use(express.json());
-    this.app.use('/login', routeLogin);
+    this.app.use('/login', routes.routeLogin);
+    this.app.use('/teams', routes.routeTeam);
   }
 
   // ...
