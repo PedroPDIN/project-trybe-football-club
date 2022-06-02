@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { JwtPayload, verify } from 'jsonwebtoken';
 import User from '../database/models/User';
 import { generateToken, secret } from './generateToken';
