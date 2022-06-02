@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import { readFileSync } from 'fs';
 
 const generateToken = (email: string): string => {
-  const secret = readFileSync('json.evaluation.key', 'utf-8');
+  const secret = readFileSync('jwt.evaluation.key', 'utf-8');
 
   const payload = { user: email };
 
