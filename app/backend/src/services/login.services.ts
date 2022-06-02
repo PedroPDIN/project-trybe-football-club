@@ -2,6 +2,7 @@ import * as bcrypt from 'bcrypt';
 import User from '../database/models/User';
 import generateToken from './generateToken';
 import { ILoginUser, IUser } from '../interfaces';
+import { userInfo } from 'os';
 
 type Login = {
   email: string,
@@ -10,25 +11,21 @@ type Login = {
 
 export default class LoginService {
   public login = async (info: Login): Promise<ILoginUser | null> => {
-    const { email, password } = info;
+    const userFind = await User.findOne({ where: { email: info.email } }) as IUser;
+    if (!userFind) return null;
 
-    const user = await User.findOne({ where: { email } }) as IUser;
-    if (!user) return null;
-
-    const criptoPassword = await bcrypt.compare(password, user.password);
-    // console.log(criptoPassword);
+    const criptoPassword = await bcrypt.compare(info.password, userFind.password);
     if (!criptoPassword) return null;
 
-    const token = generateToken(email);
+    const token = generateToken(info.email);
 
-    const { id, username, role, email: emailUser } = user;
-
+    const { id, username, role, email } = userFind;
     return {
       user: {
         id,
         username,
         role,
-        emailUser,
+        email,
       },
       token,
     };

@@ -2,7 +2,7 @@ type User = {
   id: number,
   username: string,
   role: string,
-  emailUser: string
+  email: string
 };
 
 export default interface ILoginUser {

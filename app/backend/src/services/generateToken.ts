@@ -1,9 +1,9 @@
 import * as jwt from 'jsonwebtoken';
 import { readFileSync } from 'fs';
 
-const generateToken = (email: string): string => {
-  const secret = readFileSync('jwt.evaluation.key', 'utf-8');
+const secret = readFileSync('jwt.evaluation.key', 'utf-8');
 
+const generateToken = (email: string): string => {
   const payload = { user: email };
 
   const token = jwt.sign(payload, String(secret), { expiresIn: '10d' });
