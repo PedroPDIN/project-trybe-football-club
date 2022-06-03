@@ -6,4 +6,10 @@ export default class TeamService {
     const teams = await Team.findAll();
     return teams;
   };
+
+  public findTeam = async (id: number): Promise<ITeam | null> => {
+    const team = await Team.findOne({ where: { id } }) as ITeam;
+    if (!team) return null;
+    return team;
+  };
 }
