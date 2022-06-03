@@ -2,6 +2,7 @@ import { Model, DataTypes } from 'sequelize';
 import db from '.';
 
 export default class Match extends Model {
+  public id!: number;
   public homeTeam!: number;
   public homeTeamGoals!: number;
   public awayTeam!: number;

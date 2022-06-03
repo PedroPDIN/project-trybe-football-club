@@ -25,6 +25,7 @@ class App {
     this.app.use(express.json());
     this.app.use('/login', routes.routeLogin);
     this.app.use('/teams', routes.routeTeam);
+    this.app.use('/matches', routes.routeMatch);
   }
 
   // ...
