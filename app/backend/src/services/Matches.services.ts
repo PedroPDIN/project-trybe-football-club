@@ -1,6 +1,6 @@
 import Match from '../database/models/Match';
 import Team from '../database/models/Team';
-import { ITeam } from '../interfaces';
+import { ITeam, IMatchBody } from '../interfaces';
 
 type Matches = {
   id: number,
@@ -46,5 +46,10 @@ export default class MatchService {
     };
 
     return teams;
+  };
+
+  public createMatch = async (info: IMatchBody) => {
+    const newMatch = await Match.create(info);
+    return newMatch;
   };
 }
