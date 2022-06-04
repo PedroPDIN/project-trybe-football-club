@@ -3,7 +3,7 @@ import { ITeam } from '../interfaces';
 
 export default class TeamService {
   public teamsAll = async (): Promise<ITeam[]> => {
-    const teams = await Team.findAll();
+    const teams = await Team.findAll() as ITeam[];
     return teams;
   };
 

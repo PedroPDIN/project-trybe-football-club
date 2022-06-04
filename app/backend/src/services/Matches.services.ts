@@ -34,6 +34,18 @@ export default class MatchService {
     return result;
   };
 
+  public createMatch = async (info: IMatchBody): Promise<INewMath> => {
+    const newMatch = await Match.create(info);
+    return newMatch;
+  };
+
+  public validTeams = async (homeId: number, awayId: number): Promise<number> => {
+    const teams = await this.teamsMatch(homeId, awayId);
+    if (!teams.homeTeam || !teams.awayTeam) return 1;
+    if (teams.homeTeam.teamName === teams.awayTeam.teamName) return 2;
+    return 0;
+  };
+
   private teamsMatch = async (home: number, away: number) => {
     const teamsAll = await Team.findAll() as ITeam[];
 
@@ -46,21 +58,6 @@ export default class MatchService {
     };
 
     return teams;
-  };
-
-  public createMatch = async (info: IMatchBody): Promise<INewMath> => {
-    const newMatch = await Match.create(info);
-    return newMatch;
-  };
-
-  public equalTeams = async (homeId: number, awayId: number): Promise<boolean> => {
-    const teamsAll = await Team.findAll() as ITeam[];
-
-    const teamHome = teamsAll.find(({ id }) => id === homeId) as ITeam;
-    const teamAway = teamsAll.find(({ id }) => id === awayId) as ITeam;
-
-    if (teamHome.teamName === teamAway.teamName) return false;
-    return true;
   };
 
   public updateProgress = async (id: number): Promise<boolean | null > => {

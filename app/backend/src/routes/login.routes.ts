@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { isValidLogin } from '../middlewares/validations';
+import isValidLogin from '../middlewares/validations';
 import { authLogin } from '../middlewares/auth';
 import { LoginController } from '../controllers';
 
