@@ -1,3 +1,7 @@
 import isValidLogin from './login.validation';
+import isValidMatch from './match.validation';
 
-export default isValidLogin;
+export {
+  isValidLogin,
+  isValidMatch,
+};

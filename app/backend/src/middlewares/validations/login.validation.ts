@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import loginSchema from '../joi';
+import { loginSchema } from '../joi';
 
 const isValidLogin = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;

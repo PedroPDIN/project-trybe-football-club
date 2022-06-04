@@ -1,6 +1,6 @@
 import Match from '../database/models/Match';
 import Team from '../database/models/Team';
-import { ITeam, IMatchBody } from '../interfaces';
+import { ITeam, IMatchBody, INewMath } from '../interfaces';
 
 type Matches = {
   id: number,
@@ -35,7 +35,7 @@ export default class MatchService {
   };
 
   private teamsMatch = async (home: number, away: number) => {
-    const teamsAll = await Team.findAll();
+    const teamsAll = await Team.findAll() as ITeam[];
 
     const homeTeam = teamsAll.find(({ id }) => id === home) as ITeam;
     const awayTeam = teamsAll.find(({ id }) => id === away) as ITeam;
@@ -48,8 +48,26 @@ export default class MatchService {
     return teams;
   };
 
-  public createMatch = async (info: IMatchBody) => {
+  public createMatch = async (info: IMatchBody): Promise<INewMath> => {
     const newMatch = await Match.create(info);
     return newMatch;
+  };
+
+  public equalTeams = async (homeId: number, awayId: number): Promise<boolean> => {
+    const teamsAll = await Team.findAll() as ITeam[];
+
+    const teamHome = teamsAll.find(({ id }) => id === homeId) as ITeam;
+    const teamAway = teamsAll.find(({ id }) => id === awayId) as ITeam;
+
+    if (teamHome.teamName === teamAway.teamName) return false;
+    return true;
+  };
+
+  public updateProgress = async (id: number): Promise<boolean | null > => {
+    const findMatch = await Match.findOne({ where: { id } });
+    if (!findMatch) return null;
+
+    await Match.update({ inProgress: false }, { where: { id } });
+    return true;
   };
 }

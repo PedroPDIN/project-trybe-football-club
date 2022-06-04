@@ -1,3 +1,7 @@
 import loginSchema from './login.joi';
+import matchSchema from './match.joi';
 
-export default loginSchema;
+export {
+  loginSchema,
+  matchSchema,
+};

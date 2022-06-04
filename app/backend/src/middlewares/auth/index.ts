@@ -1,3 +1,7 @@
 import authLogin from './login.auth';
+import authMatch from './match.auth';
 
-export default authLogin;
+export {
+  authLogin,
+  authMatch,
+};
