@@ -39,4 +39,11 @@ export default class MatchController {
     if (!result) return res.status(400).json({ message: 'match not found' });
     return res.status(200).json({ message: 'Finished' });
   };
+
+  public updateResult = async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params;
+    const result = await this.service.updateResult(Number(id), req.body);
+    if (!result) return res.status(400).json({ message: 'match not found' });
+    return res.status(200).json({ message: 'result changed successfully' });
+  };
 }

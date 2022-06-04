@@ -11,6 +11,11 @@ type Matches = {
   inProgress: boolean
 };
 
+type Results = {
+  homeTeamGoals: number,
+  awayTeamGoals: number,
+};
+
 export default class MatchService {
   public matchesAll = async () => {
     const matches = await Match.findAll() as Matches[];
@@ -60,11 +65,20 @@ export default class MatchService {
     return teams;
   };
 
-  public updateProgress = async (id: number): Promise<boolean | null > => {
+  public updateProgress = async (id: number): Promise<boolean> => {
     const findMatch = await Match.findOne({ where: { id } });
-    if (!findMatch) return null;
+    if (!findMatch) return false;
 
     await Match.update({ inProgress: false }, { where: { id } });
+    return true;
+  };
+
+  public updateResult = async (id: number, results: Results): Promise<boolean> => {
+    const { homeTeamGoals, awayTeamGoals } = results;
+    const findMatch = await Match.findOne({ where: { id } });
+    if (!findMatch) return false;
+
+    await Match.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
     return true;
   };
 }
