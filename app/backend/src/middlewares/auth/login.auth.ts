@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verify } from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import { secret } from '../../services';
 
 const authLogin = (req: Request, res: Response, next: NextFunction) => {
@@ -8,10 +8,12 @@ const authLogin = (req: Request, res: Response, next: NextFunction) => {
 
   if (!token) return res.status(401).json({ message: 'token not found' });
 
-  verify(token, secret, (err, _decoded) => {
-    if (err) return res.status(401).json({ message: 'Expired or invalid token' });
+  try {
+    jwt.verify(token, secret);
     next();
-  });
+  } catch (error) {
+    return res.status(401).json({ message: 'Expired or invalid token' });
+  }
 };
 
 export default authLogin;

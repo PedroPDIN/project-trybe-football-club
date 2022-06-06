@@ -16,7 +16,7 @@ const { expect } = chai;
 
 let chaiResponse: Response 
 
-describe.only('Verificando /login/login', () => {
+describe('Verificando POST /login', () => {
 
   before(async () => {
     sinon.stub(User, "findOne").resolves(userMock as User)
@@ -150,9 +150,7 @@ describe.only('Verificando /login/login', () => {
   })
 })
 
-
-
-describe('Verificando o endpoint /validate', async () => {
+describe('Verificando GET /login/validate', async () => {
   before(async () => {
     sinon.stub(User, "findOne").resolves(userMock as User);
     sinon.stub(jwt, 'verify').resolves({ user: 'user@user.com' });
@@ -163,14 +161,13 @@ describe('Verificando o endpoint /validate', async () => {
     (User.findOne as sinon.SinonStub).restore();
   });
 
-  it('Retorna status 200 e a string "user" caso login foi autenticado com sucesso', async () => {
+  it('Retorna status 200 caso login foi autenticado com sucesso', async () => {
     chaiResponse = await chai
     .request(app)
     .get('/login/validate')
-    .set('authorization', 'mock_Token')
+    .set('authorization', 'mock_token')
     .send();
 
     expect(chaiResponse.status).to.be.equal(200);
-    // expect(chaiResponse.body).to.be.equal('user')
   })
 })
