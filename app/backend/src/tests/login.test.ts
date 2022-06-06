@@ -150,6 +150,40 @@ describe('Verificando POST /login', () => {
   })
 })
 
+describe('Testando erros GET /login', () => {
+  before(async () => {
+    sinon.stub(User, "findOne").resolves(null)
+  });
+
+  after(() => {
+    (User.findOne as sinon.SinonStub).restore();
+  });
+
+  it('Retorna status 401 caso o returno seja null', async () => {
+    chaiResponse = await chai
+    .request(app)
+    .post('/login')
+    .send({
+      "email": "user@user.com",
+      "password": "secret_user"
+    });
+
+    expect(chaiResponse.status).to.be.equal(401);
+  })
+
+  it('Retorna a mensagem caso o returno seja null', async () => {
+    chaiResponse = await chai
+    .request(app)
+    .post('/login')
+    .send({
+      "email": "user@user.com",
+      "password": "secret_user"
+    });
+
+    expect(chaiResponse.body.message).to.be.equal('Incorrect email or password');
+  })
+})
+
 describe('Verificando GET /login/validate', async () => {
   before(async () => {
     sinon.stub(User, "findOne").resolves(userMock as User);
@@ -169,5 +203,37 @@ describe('Verificando GET /login/validate', async () => {
     .send();
 
     expect(chaiResponse.status).to.be.equal(200);
+  })
+})
+
+describe('Testando erros GET /login/validate', () => {
+  before(async () => {
+    sinon.stub(User, "findOne").resolves(null);
+    sinon.stub(jwt, 'verify').resolves({ user: 'user@user.com' });
+  });
+
+  after(() => {
+    (User.findOne as sinon.SinonStub).restore();
+    (jwt.verify as sinon.SinonStub).restore();
+  });
+
+  it('Retorna status 401 caso o returno seja null', async () => {
+    chaiResponse = await chai
+    .request(app)
+    .get('/login/validate')
+    .set('authorization', 'mock_token')
+    .send();
+
+    expect(chaiResponse.status).to.be.equal(404);
+  })
+
+  it('Retorna a mensagem caso o returno seja null', async () => {
+    chaiResponse = await chai
+    .request(app)
+    .get('/login/validate')
+    .set('authorization', 'mock_token')
+    .send();
+
+    expect(chaiResponse.body.message).to.be.equal('User not found');
   })
 })
