@@ -8,13 +8,13 @@ import { app } from '../app';
 import User from '../database/models/User';
 import { Response } from 'superagent';
 
-import userMock from './mocks';
+import { userMock } from './mocks';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-let chaiResponse: Response 
+let chaiResponse: Response;
 
 describe('Verificando POST /login', () => {
 

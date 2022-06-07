@@ -1,3 +1,4 @@
 import userMock from './login.mock';
+import teamMock from './team.mock';
 
-export default userMock;
+export { userMock, teamMock };
