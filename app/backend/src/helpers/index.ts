@@ -1,3 +1,9 @@
 import list from './errorList';
+import efficiency from './efficiency';
+import compare from './order';
 
-export default list;
+export {
+  list,
+  efficiency,
+  compare,
+};

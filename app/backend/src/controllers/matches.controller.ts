@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { MatchService } from '../services';
-import list from '../helpers';
+import { list } from '../helpers';
 
 export default class MatchController {
   constructor(private service = new MatchService()) {}

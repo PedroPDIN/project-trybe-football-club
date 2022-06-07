@@ -1,6 +1,6 @@
 import MatchService from './Matches.services';
-import TeamService from './teams.services';
-import { ITeam } from '../interfaces';
+import { efficiency, compare } from '../helpers';
+import { ILeaderBoard } from '../interfaces';
 
 type Matches = {
   id: number,
@@ -16,17 +16,114 @@ type Matches = {
 export default class LeaderBoardService {
   constructor(
     private serviceMatches = new MatchService(),
-    private serviceTeams = new TeamService(),
   ) {}
 
   public qualification = async () => {
     const matches = await this.serviceMatches.matchesAll() as Matches[];
-    const teams = await this.serviceTeams.teamsAll() as ITeam[];
-
-    const matchEndProgress = matches.filter(({ inProgress }) => inProgress === false);
-    const teamsAll = teams.map(({ teamName }) => teamName); // todos os nomes dos times
-    console.log(teamsAll);
-
-    return matchEndProgress;
+    const matchesEndProgress = matches.filter(({ inProgress }) => inProgress === false); // filtrando partidas encerradas
+    const teamsAllHome = matchesEndProgress.map(({ teamHome }) => teamHome.teamName); // todos os times da casa com as partidas encerradas.
+    const teamsHome = teamsAllHome.filter((v, i) => teamsAllHome.indexOf(v) === i); // eliminando nome de times repetitivos;
+    const result = this.structure(teamsHome, matchesEndProgress);
+    return result;
   };
+
+  private totalPoints = (matches: Matches[]) => {
+    let totalPoints = 0;
+    matches.forEach((v) => {
+      if (v.homeTeamGoals > v.awayTeamGoals) {
+        totalPoints += 3;
+      }
+
+      if (v.homeTeamGoals === v.awayTeamGoals) {
+        totalPoints += 1;
+      }
+    });
+    return totalPoints;
+  };
+
+  private totalGames = (matches: Matches[]) => {
+    const totalGames = matches.length;
+    return totalGames;
+  };
+
+  private totalVictories = (matches: Matches[]) => {
+    let totalVictories = 0;
+    matches.forEach((v) => {
+      if (v.homeTeamGoals > v.awayTeamGoals) {
+        totalVictories += 1;
+      }
+    });
+    return totalVictories;
+  };
+
+  private totalDraws = (matches: Matches[]) => {
+    let totalDraws = 0;
+    matches.forEach((v) => {
+      if (v.homeTeamGoals === v.awayTeamGoals) {
+        totalDraws += 1;
+      }
+    });
+    return totalDraws;
+  };
+
+  private totalLosses = (matches: Matches[]) => {
+    let totalLosses = 0;
+    matches.forEach((v) => {
+      if (v.homeTeamGoals < v.awayTeamGoals) {
+        totalLosses += 1;
+      }
+    });
+    return totalLosses;
+  };
+
+  private goalsFavor = (matches: Matches[]) => {
+    const goalsFavor = matches.reduce((acc, v) => (
+      v.homeTeamGoals + acc
+    ), 0);
+    return goalsFavor;
+  };
+
+  private goalsOwn = (matches: Matches[]) => {
+    const goalsOwn = matches.reduce((acc, v) => (
+      v.awayTeamGoals + acc
+    ), 0);
+    return goalsOwn;
+  };
+
+  private goalsBalance = (matches: Matches[]) => {
+    const goalsBalance = this.goalsFavor(matches) - this.goalsOwn(matches);
+    return goalsBalance;
+  };
+
+  private efficiency = (matches: Matches[]) => {
+    const points = this.totalPoints(matches);
+    const games = this.totalGames(matches);
+    const result = efficiency(points, games);
+    return Number(result);
+  };
+
+  private structure = (teams: string[], matches: Matches[]) => {
+    const list: ILeaderBoard[] = [];
+    teams.forEach((name) => {
+      const matchFilter = matches.filter((match) => (match.teamHome.teamName === name));
+
+      list.push({
+        name,
+        totalPoints: this.totalPoints(matchFilter),
+        totalGames: this.totalGames(matchFilter),
+        totalVictories: this.totalVictories(matchFilter),
+        totalDraws: this.totalDraws(matchFilter),
+        totalLosses: this.totalLosses(matchFilter),
+        goalsFavor: this.goalsFavor(matchFilter),
+        goalsOwn: this.goalsOwn(matchFilter),
+        goalsBalance: this.goalsBalance(matchFilter),
+        efficiency: this.efficiency(matchFilter),
+      });
+    });
+
+    const result = this.order(list);
+    return result;
+  };
+
+  private order = (list: ILeaderBoard[]) => compare(list);
 }

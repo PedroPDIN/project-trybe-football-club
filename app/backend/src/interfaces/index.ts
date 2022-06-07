@@ -2,6 +2,7 @@ import ILoginUser from './login.interfaces';
 import IUser from './user.interfaces';
 import ITeam from './team.interfaces';
 import { IMatchBody, INewMath } from './match.interfaces';
+import ILeaderBoard from './leaderboard.interface';
 
 export {
   ILoginUser,
@@ -9,4 +10,5 @@ export {
   INewMath,
   IUser,
   ITeam,
+  ILeaderBoard,
 };
