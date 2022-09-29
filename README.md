@@ -15,16 +15,6 @@
   2. Instale as dependências [**Caso existam**]
     * `npm install`
 
-  3. Crie uma branch a partir da branch `master`
-      * Verifique que você está na branch `master`
-        * Exemplo: `git branch`
-      * Se não estiver, mude para a branch `master`
-        * Exemplo: `git checkout master`
-        
-      * Agora crie uma branch à qual você vai submeter os `commits` do seu projeto
-        * Você deve criar uma branch no seguinte formato: `nome-de-usuario-nome-do-projeto`
-        * Exemplo: `git checkout -b joaozinho-project-trybe-football-club`
-
 </details>
 
 
