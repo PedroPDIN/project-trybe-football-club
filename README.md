@@ -2,7 +2,7 @@
 
 ### O TFC é um site informativo sobre partidas e classificações de futebol!
 
-#### O projeto tem como finalidade construir uma API (utilizando TDD) e também integrar - através do docker-compose - as aplicações para que elas funcionem consumindo um banco de dados.
+#### O projeto tem como finalidade construir uma API e também integrar - através do docker-compose - as aplicações para que elas funcionem consumindo um banco de dados.
 
 <details>
   <summary><strong>Instalação do projeto</strong></summary><br />
