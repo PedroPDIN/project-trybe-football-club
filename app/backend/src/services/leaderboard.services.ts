@@ -1,5 +1,5 @@
 import MatchService from './Matches.services';
-import { efficiency, compare } from '../helpers';
+import { average, compare } from '../helpers';
 import { ILeaderBoard } from '../interfaces';
 
 type Matches = {
@@ -98,9 +98,11 @@ export default class LeaderBoardService {
   private efficiency = (matches: Matches[]) => {
     const points = this.totalPoints(matches);
     const games = this.totalGames(matches);
-    const result = efficiency(points, games);
+    const result = average(points, games);
     return Number(result);
   };
+
+  private order = (list: ILeaderBoard[]) => compare(list);
 
   private structure = (teams: string[], matches: Matches[]) => {
     const list: ILeaderBoard[] = [];
@@ -124,6 +126,4 @@ export default class LeaderBoardService {
     const result = this.order(list);
     return result;
   };
-
-  private order = (list: ILeaderBoard[]) => compare(list);
 }

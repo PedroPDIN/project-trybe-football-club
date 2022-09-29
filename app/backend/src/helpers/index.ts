@@ -1,9 +1,9 @@
 import list from './errorList';
-import efficiency from './efficiency';
+import average from './efficiency';
 import compare from './order';
 
 export {
   list,
-  efficiency,
+  average,
   compare,
 };
