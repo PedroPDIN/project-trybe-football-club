@@ -229,7 +229,7 @@
 
 </details>
 
-### Status do Projeto - :construction: Incompleto :construction:
+## Status do Projeto - :construction: Incompleto :construction:
   * Criação do endpoint (rota): `/leaderboard/away`
       - Filtrar a classificações dos times, quando visitantes.
   * Finalizar a cobertura de testes no projeto.
