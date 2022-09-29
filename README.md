@@ -4,6 +4,29 @@
 
 #### O projeto tem como finalidade construir uma API (utilizando TDD) e também integrar - através do docker-compose - as aplicações para que elas funcionem consumindo um banco de dados.
 
+<details>
+  <summary><strong>Instalação do projeto</strong></summary><br />
+  1. Clone o repositório
+
+  -`git clone git@github.com:PedroPDIN/project-trybe-football-club.git`.
+  - Entre na pasta do repositório que você acabou de clonar:
+      * `cd project-trybe-football-club`
+
+  2. Instale as dependências [**Caso existam**]
+    * `npm install`
+
+  3. Crie uma branch a partir da branch `master`
+      * Verifique que você está na branch `master`
+        * Exemplo: `git branch`
+      * Se não estiver, mude para a branch `master`
+        * Exemplo: `git checkout master`
+        
+      * Agora crie uma branch à qual você vai submeter os `commits` do seu projeto
+        * Você deve criar uma branch no seguinte formato: `nome-de-usuario-nome-do-projeto`
+        * Exemplo: `git checkout -b joaozinho-project-trybe-football-club`
+
+</details>
+
 
 <details>
   <summary><strong>Informações do Projeto</strong></summary>
